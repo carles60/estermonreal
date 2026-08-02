@@ -1,0 +1,149 @@
+---
+// src/pages/avis-legal.astro
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<!DOCTYPE html>
+<html lang="ca">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Avís Legal | Ester Monreal</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+  </head>
+  <body>
+
+    <Header />
+
+    <main class="contenedor-legal">
+      <h1 class="titulo-seccion">AVÍS LEGAL</h1>
+
+      <div class="contenido-legal">
+        <section>
+          <h2>1. Dades Identificatives</h2>
+          <p>
+            En compliment de l'article 10 de la Llei 34/2002, de 11 de juliol, de Serveis de la Societat de la Informació i del Comerç Electrònic (LSSI-CE), s'informa de les dades de la titular del lloc web:
+          </p>
+          <ul>
+            <li><strong>Titular:</strong> Ester Monreal</li>
+            <li><strong>NIF/DNI:</strong> [Inserir NIF/DNI d'Ester]</li>
+            <li><strong>Domicili professional:</strong> [Inserir ciutat / adreça si es dóna el cas]</li>
+            <li><strong>Correu electrònic:</strong> [Inserir email de contacte]</li>
+            <li><strong>Activitat:</strong> Arquitectura interior / Infoarquitectura / Disseny</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>2. Objecte i Àmbit d'Aplicació</h2>
+          <p>
+            Aquest Avís Legal regula l'accés, navegació i ús del lloc web. L'accés i navegació per aquest lloc web atribueix la condició d'usuari i implica l'acceptació plena i sense reserves de totes i cadascuna de les disposicions incloses en aquest text legal.
+          </p>
+        </section>
+
+        <section>
+          <h2>3. Propietat Intel·lectual i Industrial</h2>
+          <p>
+            Tots els continguts d'aquest lloc web (incloent-hi, a títol enunciatiu però no limitatiu, dissenys, renderitzats, plànols, fotografies, textos, imatges, logos i codi font) són propietat exclusiva d'Ester Monreal o disposen de l'autorització corresponent dels seus autors.
+          </p>
+          <p>
+            Queda expressament prohibida la reproducció, distribució, comunicació pública o transformació total o parcial d'aquests continguts sense l'autorització prèvia i per escrit de la titular.
+          </p>
+        </section>
+
+        <section>
+          <h2>4. Responsabilitat dels Continguts</h2>
+          <p>
+            La titular no es fa responsable de la informació i continguts emmagatzemats en fòrums, xarxes socials o qualsevol altre mitjà que permeti a tercers publicar continguts de forma independent al lloc web. Tampoc es garanteix l'absència de virus o altres elements que puguin causar alteracions en els sistemes informàtics dels usuaris.
+          </p>
+        </section>
+
+        <section>
+          <h2>5. Enllaços a Tercers</h2>
+          <p>
+            En el cas que al lloc web s'incloguessin enllaços cap a altres llocs d'Internet, Ester Monreal no exercirà cap tipus de control sobre aquests llocs i continguts, ni assumirà cap responsabilitat pels mateixos.
+          </p>
+        </section>
+
+        <section>
+          <h2>6. Legislació Aplicable i Jurisdicció</h2>
+          <p>
+            Per a la resolució de totes les controvèrsies o qüestions relacionades amb aquest lloc web o de les activitats en ell desenvolupades, serà d'aplicació la legislació espanyola vigent.
+          </p>
+        </section>
+      </div>
+    </main>
+
+    <Footer />
+
+  </body>
+</html>
+
+<style is:global>
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    font-family: 'Montserrat', sans-serif !important;
+    color: #111;
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+</style>
+
+<style>
+  .contenedor-legal {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 4rem 1.5rem;
+    flex: 1; /* Per empènyer el footer cap avall */
+  }
+
+  .titulo-seccion {
+    text-align: center;
+    font-size: 1.2rem;
+    font-weight: 600;
+    letter-spacing: 3px;
+    margin-bottom: 3rem;
+  }
+
+  .contenido-legal {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    line-height: 1.7;
+    color: #333;
+    font-size: 0.9rem;
+  }
+
+  .contenido-legal h2 {
+    font-size: 0.95rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 0.5rem;
+    color: #111;
+  }
+
+  .contenido-legal ul {
+    list-style: none;
+    padding-left: 0;
+    margin-top: 0.5rem;
+  }
+
+  .contenido-legal li {
+    margin-bottom: 0.3rem;
+  }
+
+  .contenido-legal strong {
+    color: #111;
+  }
+</style>

@@ -1,0 +1,475 @@
+---
+// src/pages/publicacions/index.astro
+import Header from '../components/Header.astro';
+import { Image } from 'astro:assets';
+import Footer from '../components/Footer.astro';
+
+import foto1 from '../assets/assets-curriculum/curriculum-01.jpg';
+import foto2 from '../assets/assets-curriculum/curriculum-02.jpg';
+
+
+
+const galeria = [
+  { src: foto1, alt: 'Currículum 1' },
+  { src: foto2, alt: 'Currículum 2' },
+  
+];
+
+const datosFicha = [
+  { etiqueta: 'any:', valor: '2004' },
+];
+---
+
+<!DOCTYPE html>
+<html lang="ca">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CURRÍCULUM  | Ester Monreal</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+  </head>
+  <body>
+
+    <Header />
+
+    <div class="area-contenido">
+      <main class="contenedor-proyecto">
+        
+        <!-- Galería de 2 columnas (o 1 si solo hay una foto) -->
+        <section class={`grid-galeria ${galeria.length === 1 ? 'una-imagen' : ''}`}>
+          {galeria.map((img) => (
+            <div class="item-galeria">
+              <!-- Añadimos data-full para pasar la ruta de la imagen al JS -->
+              <Image src={img.src} alt={img.alt} class="imagen-lightbox" data-full={img.src.src} />
+            </div>
+          ))}
+        </section>
+
+      <!-- Columna Derecha: Ficha explicativa -->
+        <aside class="columna-ficha">
+          
+          <h1 class="titulo-proyecto">CURRÍCULUM</h1>
+          <!-- <p class="subtitulo-proyecto">Concurs aparadors: "Temps de Flors, Girona 2012"</p>-->
+          <hr class="linea-divisoria" />
+
+          <ul class="lista-datos">
+            {datosFicha.map((item) => (
+              <li>
+                <span class="etiqueta">{item.etiqueta}</span>
+                <strong class="valor">{item.valor}</strong>
+              </li>
+            ))}
+          </ul>
+          <div style="margin-top: 2rem;">
+        <a 
+          href="/curriculum-ester-monreal.pdf" 
+          download="Curriculum_Ester_Monreal.pdf" 
+          target="_blank"
+          class="btn-descargar-pdf"
+          >
+          Descarregar CV (PDF)
+        </a>
+</div>
+        </aside>
+
+      </main>
+    </div>
+
+    <!-- ESTRUCTURA DEL MODAL / POPUP CON NAVEGACIÓN -->
+    <div id="modal-lightbox" class="modal-lightbox">
+      <span class="cerrar-modal">&times;</span>
+      
+      <button class="flecha-lightbox anterior" id="btn-anterior" aria-label="Imagen anterior">&#10094;</button>
+      <img id="imagen-modal" class="imagen-modal" src="" alt="Imagen ampliada" />
+      <button class="flecha-lightbox siguiente" id="btn-siguiente" aria-label="Imagen siguiente">&#10095;</button>
+      
+      <div id="contador-lightbox" class="contador-lightbox"></div>
+    </div>
+
+    <!-- SCRIPT CON NAVEGACIÓN DE FLECHAS -->
+    <script>
+      function activarLightbox() {
+        const imagenes = document.querySelectorAll('.imagen-lightbox');
+        const modal = document.getElementById('modal-lightbox');
+        const imagenModal = document.getElementById('imagen-modal') as HTMLImageElement;
+        const botonCerrar = document.querySelector('.cerrar-modal');
+        const btnAnterior = document.getElementById('btn-anterior');
+        const btnSiguiente = document.getElementById('btn-siguiente');
+        const contador = document.getElementById('contador-lightbox');
+
+        if (!modal || !imagenModal) return;
+
+        let indiceActual = 0;
+        const totalImagenes = imagenes.length;
+
+        function mostrarImagen(index: number) {
+          indiceActual = index;
+          const imgSeleccionada = imagenes[indiceActual] as HTMLImageElement;
+          const rutaOriginal = imgSeleccionada.getAttribute('data-full') || imgSeleccionada.src;
+          
+          imagenModal.src = rutaOriginal;
+          
+          if (contador) {
+            contador.textContent = `${indiceActual + 1} / ${totalImagenes}`;
+          }
+        }
+
+        imagenes.forEach((img, index) => {
+          img.addEventListener('click', () => {
+            mostrarImagen(index);
+            modal.classList.add('activo');
+          });
+        });
+
+        function fotoAnterior() {
+          const nuevoIndice = (indiceActual - 1 + totalImagenes) % totalImagenes;
+          mostrarImagen(nuevoIndice);
+        }
+
+        function fotoSiguiente() {
+          const nuevoIndice = (indiceActual + 1) % totalImagenes;
+          mostrarImagen(nuevoIndice);
+        }
+
+        btnAnterior?.addEventListener('click', (e) => {
+          e.stopPropagation();
+          fotoAnterior();
+        });
+
+        btnSiguiente?.addEventListener('click', (e) => {
+          e.stopPropagation();
+          fotoSiguiente();
+        });
+
+        botonCerrar?.addEventListener('click', () => {
+          modal.classList.remove('activo');
+        });
+
+        modal.addEventListener('click', (e) => {
+          if (e.target === modal) {
+            modal.classList.remove('activo');
+          }
+        });
+
+        document.addEventListener('keydown', (e) => {
+          if (!modal.classList.contains('activo')) return;
+
+          if (e.key === 'Escape') {
+            modal.classList.remove('activo');
+          } else if (e.key === 'ArrowLeft') {
+            fotoAnterior();
+          } else if (e.key === 'ArrowRight') {
+            fotoSiguiente();
+          }
+        });
+      }
+
+      document.addEventListener('DOMContentLoaded', activarLightbox);
+    </script>
+    <Footer />
+  </body>
+</html>
+
+<style is:global>
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    font-family: 'Montserrat', sans-serif !important;
+    color: #111;
+    background-color: #fff;
+    
+    /* AÑADE ESTAS TRES LÍNEAS: */
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+  main {
+    width: 100%;
+    max-width: 1140px;
+    margin: 0 auto;
+    padding: 4rem 1.5rem;
+    
+    /* ESTO HACE QUE EL CONTENIDO "EMPUJE" AL FOOTER ABAJO DEL TODO: */
+    flex: 1; 
+  }
+</style>
+
+<style>
+  .area-contenido {
+    background-color: #e5e5e5;
+    width: 100%;
+    min-height: calc(100vh - 80px);
+    padding: 3rem 1.5rem;
+  }
+
+  .contenedor-proyecto {
+    width: 100%;
+    max-width: 1140px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 320px;
+    gap: 2.5rem;
+    align-items: start;
+  }
+
+  /* Cuando solo hay 1 imagen en el array 'galeria' */
+  .grid-galeria.una-imagen {
+    grid-template-columns: 1fr;
+  }
+
+  /* Opcional: ajustar el tamaño si quieres que no se haga gigante verticalmente */
+  .grid-galeria.una-imagen .item-galeria img {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+  }
+  
+  /* Contenedor principal de la galería (2 columnas) */
+  .grid-galeria {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* Dos columnas iguales, una al lado de la otra */
+    gap: 1.5rem; /* Espacio entre las dos páginas del CV */
+    align-items: start; /* Importante: alinea las imágenes arriba por si tienen alturas diferentes */
+  }
+
+  /* El elemento que envuelve cada imagen */
+  .item-galeria {
+    width: 100%;
+  }
+
+  /* Estilos específicos para que las fotos del CV se vean a tamaño completo */
+  .grid-galeria .item-galeria img {
+    width: 100%; /* Ocupa todo el ancho de su columna */
+    height: auto; /* La altura se calcula automáticamente para mantener la proporción (verdadera magnitud) */
+    display: block;
+    
+    /* Eliminamos cualquier propiedad de encaje que pudiera estar limitándolas */
+    object-fit: normal; 
+    max-height: none; /* Asegúrate de que no haya una altura máxima heredada */
+  }
+
+  .item-galeria img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    /* 'cover' hace que la foto llene todo el espacio sin deformarse */
+    object-fit: cover; 
+    cursor: pointer;
+    transition: opacity 0.2s ease, transform 0.3s ease;
+  }
+
+  .item-galeria img:hover {
+    opacity: 0.9;
+    transform: scale(1.02); /* Sutil zoom al pasar el ratón */
+  }
+
+  .columna-ficha {
+    position: sticky;
+    top: 2rem;
+    color: #222;
+    width: 100%;
+  }
+
+  /* ESTILOS DE MIGA DE PAN / BREADCRUMB */
+  .breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-bottom: 1.2rem;
+  }
+
+  .breadcrumb a {
+    color: #555 !important;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s ease;
+  }
+
+  .breadcrumb a:hover {
+    color: #000 !important;
+    text-decoration: underline;
+  }
+
+  .breadcrumb .separador {
+    color: #888;
+    font-weight: 300;
+  }
+
+  .titulo-proyecto {
+    font-size: 1.1rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+  }
+
+  .subtitulo-proyecto {
+    font-size: 0.9rem;
+    color: #444;
+    margin-bottom: 0.8rem;
+  }
+
+  .linea-divisoria {
+    border: none;
+    border-top: 1px solid #999;
+    margin-bottom: 1.5rem;
+  }
+
+  .lista-datos {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .lista-datos li {
+    font-size: 0.88rem;
+    display: flex;
+    gap: 0.5rem;
+    align-items: baseline;
+  }
+
+  .etiqueta {
+    color: #444;
+  }
+
+  .valor {
+    color: #000;
+    font-weight: 700;
+  }
+
+  /* ESTILOS DEL POPUP / LIGHTBOX */
+  .modal-lightbox {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.92);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+  }
+
+  .modal-lightbox.activo {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .imagen-modal {
+    max-width: 85vw;
+    max-height: 85vh;
+    object-fit: contain;
+    border-radius: 2px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  }
+
+  .cerrar-modal {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    color: #fff;
+    font-size: 2.5rem;
+    font-weight: 300;
+    cursor: pointer;
+    user-select: none;
+    transition: color 0.2s ease;
+    z-index: 10000;
+  }
+
+  .cerrar-modal:hover {
+    color: #aaa;
+  }
+
+  .flecha-lightbox {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: transparent;
+    border: none;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 3rem;
+    padding: 1rem;
+    cursor: pointer;
+    user-select: none;
+    transition: color 0.2s ease, transform 0.2s ease;
+    z-index: 10000;
+  }
+
+  .flecha-lightbox:hover {
+    color: #ffffff;
+    transform: translateY(-50%) scale(1.15);
+  }
+
+  .flecha-lightbox.anterior {
+    left: 20px;
+  }
+
+  .flecha-lightbox.siguiente {
+    right: 20px;
+  }
+
+  .contador-lightbox {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.85rem;
+    letter-spacing: 2px;
+  }
+
+  /*Estilos para el botón DESCARGAR CV (PDF)*/
+  .btn-descargar-pdf {
+    display: inline-block;
+    padding: 0.75rem 1.25rem;
+    background-color: #000;
+    color: #fff;
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    transition: background-color 0.2s;
+  }
+
+  .btn-descargar-pdf:hover {
+    background-color: #333;
+  }
+
+  @media (max-width: 800px) {
+    .contenedor-proyecto {
+      grid-template-columns: 1fr;
+    }
+
+    .columna-ficha {
+      position: static;
+      margin-bottom: 2rem;
+    }
+
+    .grid-galeria {
+      grid-template-columns: 1fr;
+    }
+
+    .flecha-lightbox.anterior {
+      left: 5px;
+    }
+
+    .flecha-lightbox.siguiente {
+      right: 5px;
+    }
+  }
+</style>

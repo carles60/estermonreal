@@ -1,0 +1,161 @@
+---
+// src/pages/politica-privacitat.astro
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<!DOCTYPE html>
+<html lang="ca">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Política de Privacitat | Ester Monreal</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+  </head>
+  <body>
+
+    <Header />
+
+    <main class="contenedor-legal">
+      <h1 class="titulo-seccion">POLÍTICA DE PRIVACITAT</h1>
+
+      <div class="contenido-legal">
+        <section>
+          <h2>1. Responsable del Tractament de Dades</h2>
+          <p>
+            De conformitat amb el Reglament General de Protecció de Dades (RGPD) i la Llei Orgànica 3/2018 (LOPDGDD), s'informa l'usuari que les dades personals facilitades a través d'aquest lloc web seran tractades per:
+          </p>
+          <ul>
+            <li><strong>Responsable:</strong> Ester Monreal</li>
+            <li><strong>NIF/DNI:</strong> [Inserir NIF/DNI d'Ester]</li>
+            <li><strong>Correu electrònic de contacte:</strong> [Inserir email de contacte]</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>2. Finalitat del Tractament</h2>
+          <p>
+            Les dades personals recollides a través del formulari de contacte (nom, correu electrònic, assumpte i missatge) seran utilitzades exclusivament per a les següents finalitats:
+          </p>
+          <ul>
+            <li>Atendre i respondre les consultes, dubtes o sol·licituds d'informació o pressupost enviades pels usuaris.</li>
+            <li>Mantenir la comunicació professional derivada de les consultes realitzades.</li>
+          </ul>
+          <p>
+            En cap cas les dades s'utilitzaran per a l'enviament de publicitat no sol·licitada (spam) ni per a finalitats diferents de les descrites.
+          </p>
+        </section>
+
+        <section>
+          <h2>3. Legitimació per al Tractament</h2>
+          <p>
+            La base legal per al tractament de les seves dades és el <strong>consentiment exprés</strong> atorgat per l'usuari en marcar la casella d'acceptació de la política de privacitat abans d'enviar el formulari de contacte.
+          </p>
+        </section>
+
+        <section>
+          <h2>4. Conservació de les Dades</h2>
+          <p>
+            Les dades personals proporcionades es conservaran durant el temps necessari per respondre a la consulta o gestió sol·licitada i, posteriorment, durant els terminis legals exigits per satisfer possibles responsabilitats.
+          </p>
+        </section>
+
+        <section>
+          <h2>5. Destinataris i Encarregats del Tractament</h2>
+          <p>
+            Les dades no es cediran a tercers excepte per obligació legal. Per a la gestió de l'enviament del formulari de contacte, s'utilitza el servei de gestió de formularis <strong>Web3Forms</strong>, que actua com a encarregat del tractament garantint nivells adequats de seguretat i confidencialitat.
+          </p>
+        </section>
+
+        <section>
+          <h2>6. Drets dels Usuaris</h2>
+          <p>
+            L'usuari pot exercir en qualsevol moment els seus drets d'accés, rectificació, supressió, limitació del tractament, oposició i portabilitat de les seves dades personals enviant una sol·licitud per escrit al correu electrònic <strong>[Inserir email de contacte]</strong> indicant l'assumpte "Protecció de Dades".
+          </p>
+          <p>
+            Així mateix, si ho considera oportú, té dret a presentar una reclamació davant l'Agència Espanyola de Protecció de Dades (AEPD) a través del seu lloc web oficial (www.aepd.es).
+          </p>
+        </section>
+
+        <section>
+          <h2>7. Seguretat de les Dades</h2>
+          <p>
+            La titular s'compromet a complir amb l'obligació de secret respecte a les dades de caràcter personal i a adoptar les mesures tècniques i organitzatives necessàries per evitar-ne l'alteració, pèrdua, tractament o accés no autoritzat.
+          </p>
+        </section>
+      </div>
+    </main>
+
+    <Footer />
+
+  </body>
+</html>
+
+<style is:global>
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    font-family: 'Montserrat', sans-serif !important;
+    color: #111;
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+</style>
+
+<style>
+  .contenedor-legal {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 4rem 1.5rem;
+    flex: 1;
+  }
+
+  .titulo-seccion {
+    text-align: center;
+    font-size: 1.2rem;
+    font-weight: 600;
+    letter-spacing: 3px;
+    margin-bottom: 3rem;
+  }
+
+  .contenido-legal {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    line-height: 1.7;
+    color: #333;
+    font-size: 0.9rem;
+  }
+
+  .contenido-legal h2 {
+    font-size: 0.95rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 0.5rem;
+    color: #111;
+  }
+
+  .contenido-legal ul {
+    list-style: disc;
+    padding-left: 1.2rem;
+    margin-top: 0.5rem;
+  }
+
+  .contenido-legal li {
+    margin-bottom: 0.3rem;
+  }
+
+  .contenido-legal strong {
+    color: #111;
+  }
+</style>

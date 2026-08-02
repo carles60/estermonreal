@@ -1,0 +1,150 @@
+---
+// src/pages/politica-cookies.astro
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<!DOCTYPE html>
+<html lang="ca">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Política de Cookies | Ester Monreal</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+  </head>
+  <body>
+
+    <Header />
+
+    <main class="contenedor-legal">
+      <h1 class="titulo-seccion">POLÍTICA DE COOKIES</h1>
+
+      <div class="contenido-legal">
+        <section>
+          <h2>1. Què són les Cookies?</h2>
+          <p>
+            Una cookie (o galeta) és un petit fitxer de text que es descarrega al teu ordinador, tauleta o telèfon intel·ligent en accedir a determinades pàgines web. Les cookies permeten a una pàgina web, entre altres coses, emmagatzemar i recuperar informació sobre els hàbits de navegació d'un usuari o del seu equip i, depenent de la informació que continguin i de la forma en què utilitzi el seu equip, poden utilitzar-se per reconèixer l'usuari.
+          </p>
+        </section>
+
+        <section>
+          <h2>2. Tipus de Cookies utilitzades en aquest Lloc Web</h2>
+          <p>
+            Aquest lloc web utilitza exclusivament les galetes estrictament necessàries per al funcionament tècnic i la correcta visualització del contingut:
+          </p>
+          <ul>
+            <li>
+              <strong>Cookies tècniques i de funcionament (necessàries):</strong> Són aquelles que permeten a l'usuari la navegació a través del lloc web i la utilització de les diferents opcions o serveis que hi hagi, com ara controlar el tràfic i la comunicació de dades o utilitzar elements de seguretat durant la navegació.
+            </li>
+          </ul>
+          <p>
+            <em>Nota: Aquest lloc web no utilitza cookies publicitàries ni de perfilat comercial per recopilar informació personal dels usuaris amb fins de màrqueting.</em>
+          </p>
+        </section>
+
+        <section>
+          <h2>3. Galetes de Tercers</h2>
+          <p>
+            En cas d'incloure elements externs (com ara tipografies de Google Fonts o la gestió de formularis mitjançant Web3Forms), aquests serveis poden utilitzar cookies tècniques pròpies strictly necessàries per a la correcta prestació del servei funcional.
+          </p>
+        </section>
+
+        <section>
+          <h2>4. Com Comprovar, Desactivar o Eliminar les Cookies</h2>
+          <p>
+            Com a usuari, pots permetre, blocar o eliminar les cookies instal·lades en el teu equip mitjançant la configuració de les opcions del navegador instal·lat al teu ordinador o dispositiu mòbil:
+          </p>
+          <ul>
+            <li><strong>Google Chrome:</strong> Configuració > Privacitat i seguretat > Cookies i altres dades de llocs.</li>
+            <li><strong>Mozilla Firefox:</strong> Opcions > Privacitat i Seguretat > Cookies i dades del lloc.</li>
+            <li><strong>Safari:</strong> Preferències > Privacitat.</li>
+            <li><strong>Microsoft Edge:</strong> Configuració > Permisos del lloc > Cookies i dades del lloc.</li>
+          </ul>
+          <p>
+            Tingues en compte que, si desactives les galetes tècniques del teu navegador, és possible que algunes funcionalitats de la pàgina web no funcionin de manera òptima.
+          </p>
+        </section>
+
+        <section>
+          <h2>5. Actualització de la Política de Cookies</h2>
+          <p>
+            La titular d'aquest lloc web pot modificar aquesta Política de Cookies en funció d'exigències legislatives o amb la finalitat d'adaptar dita política a les instruccions dictades per l'Agència Espanyola de Protecció de Dades (AEPD). Es recomana als usuaris revisar-la periòdicament.
+          </p>
+        </section>
+      </div>
+    </main>
+
+    <Footer />
+
+  </body>
+</html>
+
+<style is:global>
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    font-family: 'Montserrat', sans-serif !important;
+    color: #111;
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+</style>
+
+<style>
+  .contenedor-legal {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 4rem 1.5rem;
+    flex: 1;
+  }
+
+  .titulo-seccion {
+    text-align: center;
+    font-size: 1.2rem;
+    font-weight: 600;
+    letter-spacing: 3px;
+    margin-bottom: 3rem;
+  }
+
+  .contenido-legal {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    line-height: 1.7;
+    color: #333;
+    font-size: 0.9rem;
+  }
+
+  .contenido-legal h2 {
+    font-size: 0.95rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 0.5rem;
+    color: #111;
+  }
+
+  .contenido-legal ul {
+    list-style: disc;
+    padding-left: 1.2rem;
+    margin-top: 0.5rem;
+  }
+
+  .contenido-legal li {
+    margin-bottom: 0.5rem;
+  }
+
+  .contenido-legal em {
+    color: #666;
+    font-size: 0.85rem;
+  }
+</style>

@@ -1,0 +1,441 @@
+---
+// src/pages/publicacions/index.astro
+import Header from '../../components/Header.astro';
+import { Image } from 'astro:assets';
+
+import foto1 from '../../assets/assets-publicacions/triptic-fx-animation/triptic-01.jpg';
+
+
+const galeria = [
+  { src: foto1, alt: 'Triptic FX Animation' },
+  
+];
+
+const datosFicha = [
+  { etiqueta: 'any:', valor: 'Maig del 2012' },
+];
+---
+
+<!DOCTYPE html>
+<html lang="ca">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TRIPTIC FX ANIMATION  | Ester Monreal</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+  </head>
+  <body>
+
+    <Header />
+
+    <div class="area-contenido">
+      <main class="contenedor-proyecto">
+        
+        <!-- Galería de 2 columnas (o 1 si solo hay una foto) -->
+        <section class={`grid-galeria ${galeria.length === 1 ? 'una-imagen' : ''}`}>
+          {galeria.map((img) => (
+            <div class="item-galeria">
+              <!-- Añadimos data-full para pasar la ruta de la imagen al JS -->
+              <Image src={img.src} alt={img.alt} class="imagen-lightbox" data-full={img.src.src} />
+            </div>
+          ))}
+        </section>
+
+      <!-- Columna Derecha: Ficha explicativa -->
+        <aside class="columna-ficha">
+          
+          <!-- MIGAS DE PAN / NAVEGACIÓN -->
+          <nav class="breadcrumb" aria-label="Navegació">
+            <a href="/publicacions">Publicacions</a>
+            
+          </nav>
+
+          <h1 class="titulo-proyecto">TRIPTIC INFORMATIU: CURSOS FX ANIMATION"</h1>
+          <!-- <p class="subtitulo-proyecto">Sin subtítulo</p>-->
+          <hr class="linea-divisoria" />
+
+          <ul class="lista-datos">
+            {datosFicha.map((item) => (
+              <li>
+                <span class="etiqueta">{item.etiqueta}</span>
+                <strong class="valor">{item.valor}</strong>
+              </li>
+            ))}
+          </ul>
+        </aside>
+
+      </main>
+    </div>
+
+    <!-- ESTRUCTURA DEL MODAL / POPUP CON NAVEGACIÓN -->
+    <div id="modal-lightbox" class="modal-lightbox">
+      <span class="cerrar-modal">&times;</span>
+      
+      <button class="flecha-lightbox anterior" id="btn-anterior" aria-label="Imagen anterior">&#10094;</button>
+      <img id="imagen-modal" class="imagen-modal" src="" alt="Imagen ampliada" />
+      <button class="flecha-lightbox siguiente" id="btn-siguiente" aria-label="Imagen siguiente">&#10095;</button>
+      
+      <div id="contador-lightbox" class="contador-lightbox"></div>
+    </div>
+
+    <!-- SCRIPT CON NAVEGACIÓN DE FLECHAS -->
+    <script>
+      function activarLightbox() {
+        const imagenes = document.querySelectorAll('.imagen-lightbox');
+        const modal = document.getElementById('modal-lightbox');
+        const imagenModal = document.getElementById('imagen-modal') as HTMLImageElement;
+        const botonCerrar = document.querySelector('.cerrar-modal');
+        const btnAnterior = document.getElementById('btn-anterior');
+        const btnSiguiente = document.getElementById('btn-siguiente');
+        const contador = document.getElementById('contador-lightbox');
+
+        if (!modal || !imagenModal) return;
+
+        let indiceActual = 0;
+        const totalImagenes = imagenes.length;
+
+        function mostrarImagen(index: number) {
+          indiceActual = index;
+          const imgSeleccionada = imagenes[indiceActual] as HTMLImageElement;
+          const rutaOriginal = imgSeleccionada.getAttribute('data-full') || imgSeleccionada.src;
+          
+          imagenModal.src = rutaOriginal;
+          
+          if (contador) {
+            contador.textContent = `${indiceActual + 1} / ${totalImagenes}`;
+          }
+        }
+
+        imagenes.forEach((img, index) => {
+          img.addEventListener('click', () => {
+            mostrarImagen(index);
+            modal.classList.add('activo');
+          });
+        });
+
+        function fotoAnterior() {
+          const nuevoIndice = (indiceActual - 1 + totalImagenes) % totalImagenes;
+          mostrarImagen(nuevoIndice);
+        }
+
+        function fotoSiguiente() {
+          const nuevoIndice = (indiceActual + 1) % totalImagenes;
+          mostrarImagen(nuevoIndice);
+        }
+
+        btnAnterior?.addEventListener('click', (e) => {
+          e.stopPropagation();
+          fotoAnterior();
+        });
+
+        btnSiguiente?.addEventListener('click', (e) => {
+          e.stopPropagation();
+          fotoSiguiente();
+        });
+
+        botonCerrar?.addEventListener('click', () => {
+          modal.classList.remove('activo');
+        });
+
+        modal.addEventListener('click', (e) => {
+          if (e.target === modal) {
+            modal.classList.remove('activo');
+          }
+        });
+
+        document.addEventListener('keydown', (e) => {
+          if (!modal.classList.contains('activo')) return;
+
+          if (e.key === 'Escape') {
+            modal.classList.remove('activo');
+          } else if (e.key === 'ArrowLeft') {
+            fotoAnterior();
+          } else if (e.key === 'ArrowRight') {
+            fotoSiguiente();
+          }
+        });
+      }
+
+      document.addEventListener('DOMContentLoaded', activarLightbox);
+    </script>
+
+  </body>
+</html>
+
+<style is:global>
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    font-family: 'Montserrat', sans-serif;
+    color: #333;
+    background-color: #fff;
+  }
+</style>
+
+<style>
+  .area-contenido {
+    background-color: #e5e5e5;
+    width: 100%;
+    min-height: calc(100vh - 80px);
+    padding: 3rem 1.5rem;
+  }
+
+  .contenedor-proyecto {
+    width: 100%;
+    max-width: 1140px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 320px;
+    gap: 2.5rem;
+    align-items: start;
+  }
+
+    /* Cuando solo hay 1 imagen en el array 'galeria' */
+.grid-galeria.una-imagen {
+  grid-template-columns: 1fr;
+  /* Centramos el contenido por si la imagen no ocupa todo el ancho */
+  justify-items: center; 
+}
+
+.grid-galeria.una-imagen .item-galeria {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+/* ESTILOS CLAVE PARA ENCAJAR LA IMAGEN ENTERA */
+.grid-galeria.una-imagen .item-galeria img {
+  /* 1. Ancho automático hasta un máximo del 100% del contenedor */
+  width: auto;
+  max-width: 100%;
+  
+  /* 2. Altura limitada para que quepa en la pantalla sin hacer scroll */
+  height: auto;
+  max-height: 80vh; /* Ajusta este valor (ej: 70vh o 90vh) si la quieres más o menos grande */
+
+  /* 3. Magia: encaja la imagen entera sin recortar */
+  object-fit: contain; 
+}
+
+  .grid-galeria {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    width: 100%;
+  }
+
+  .item-galeria {
+  width: 100%;
+  /* Forzamos una proporción fija a la tarjeta. Puedes usar 16/10, 4/3, 3/2, etc. */
+  aspect-ratio: 16 / 10; 
+  overflow: hidden;
+  background-color: #ddd; /* Fondo sutil mientras carga */
+  }
+
+  .item-galeria img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    /* 'cover' hace que la foto llene todo el espacio sin deformarse */
+    object-fit: cover; 
+    cursor: pointer;
+    transition: opacity 0.2s ease, transform 0.3s ease;
+  }
+
+  .item-galeria img:hover {
+    opacity: 0.9;
+    transform: scale(1.02); /* Sutil zoom al pasar el ratón */
+  }
+
+  .columna-ficha {
+    position: sticky;
+    top: 2rem;
+    color: #222;
+    width: 100%;
+  }
+
+  /* ESTILOS DE MIGA DE PAN / BREADCRUMB */
+  .breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-bottom: 1.2rem;
+  }
+
+  .breadcrumb a {
+    color: #555 !important;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s ease;
+  }
+
+  .breadcrumb a:hover {
+    color: #000 !important;
+    text-decoration: underline;
+  }
+
+  .breadcrumb .separador {
+    color: #888;
+    font-weight: 300;
+  }
+
+  .titulo-proyecto {
+    font-size: 1.1rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+  }
+
+  .subtitulo-proyecto {
+    font-size: 0.9rem;
+    color: #444;
+    margin-bottom: 0.8rem;
+  }
+
+  .linea-divisoria {
+    border: none;
+    border-top: 1px solid #999;
+    margin-bottom: 1.5rem;
+  }
+
+  .lista-datos {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .lista-datos li {
+    font-size: 0.88rem;
+    display: flex;
+    gap: 0.5rem;
+    align-items: baseline;
+  }
+
+  .etiqueta {
+    color: #444;
+  }
+
+  .valor {
+    color: #000;
+    font-weight: 700;
+  }
+
+  /* ESTILOS DEL POPUP / LIGHTBOX */
+  .modal-lightbox {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.92);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+  }
+
+  .modal-lightbox.activo {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .imagen-modal {
+    max-width: 85vw;
+    max-height: 85vh;
+    object-fit: contain;
+    border-radius: 2px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  }
+
+  .cerrar-modal {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    color: #fff;
+    font-size: 2.5rem;
+    font-weight: 300;
+    cursor: pointer;
+    user-select: none;
+    transition: color 0.2s ease;
+    z-index: 10000;
+  }
+
+  .cerrar-modal:hover {
+    color: #aaa;
+  }
+
+  .flecha-lightbox {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: transparent;
+    border: none;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 3rem;
+    padding: 1rem;
+    cursor: pointer;
+    user-select: none;
+    transition: color 0.2s ease, transform 0.2s ease;
+    z-index: 10000;
+  }
+
+  .flecha-lightbox:hover {
+    color: #ffffff;
+    transform: translateY(-50%) scale(1.15);
+  }
+
+  .flecha-lightbox.anterior {
+    left: 20px;
+  }
+
+  .flecha-lightbox.siguiente {
+    right: 20px;
+  }
+
+  .contador-lightbox {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.85rem;
+    letter-spacing: 2px;
+  }
+
+  @media (max-width: 800px) {
+    .contenedor-proyecto {
+      grid-template-columns: 1fr;
+    }
+
+    .columna-ficha {
+      position: static;
+      margin-bottom: 2rem;
+    }
+
+    .grid-galeria {
+      grid-template-columns: 1fr;
+    }
+
+    .flecha-lightbox.anterior {
+      left: 5px;
+    }
+
+    .flecha-lightbox.siguiente {
+      right: 5px;
+    }
+  }
+</style>

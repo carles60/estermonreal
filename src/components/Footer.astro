@@ -1,0 +1,75 @@
+---
+// src/components/Footer.astro
+const currentYear = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="contenedor-footer">
+    <p class="copyright">
+      &copy; {currentYear} Ester Monreal. Tots els drets reservats.
+    </p>
+    
+    <nav class="nav-legal">
+      <a href="/avis-legal">Avís Legal</a>
+      <span class="separador">|</span>
+      <a href="/politica-privacitat">Política de Privacitat</a>
+      <span class="separador">|</span>
+      <a href="/politica-cookies">Política de Cookies</a>
+    </nav>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    width: 100%;
+    border-top: 1px solid #eaeaea;
+    padding: 2rem 1.5rem;
+    margin-top: auto; /* Ayuda a mantenerlo abajo si la página tiene poco contenido */
+  }
+
+  .contenedor-footer {
+    max-width: 1140px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.8rem;
+  }
+
+  .copyright {
+    font-size: 0.75rem;
+    color: #777;
+    letter-spacing: 0.5px;
+  }
+
+  .nav-legal {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .nav-legal a {
+    font-size: 0.75rem;
+    color: #555;
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+
+  .nav-legal a:hover {
+    color: #111;
+  }
+
+  .separador {
+    font-size: 0.75rem;
+    color: #ccc;
+  }
+
+  @media (min-width: 768px) {
+    .contenedor-footer {
+      flex-direction: row;
+      justify-content: space-between;
+    }
+  }
+</style>
