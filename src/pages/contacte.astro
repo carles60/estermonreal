@@ -49,6 +49,12 @@ import Footer from '../components/Footer.astro';
             <label for="mensaje">Missatge *</label>
             <textarea id="mensaje" name="mensaje" rows="6" required placeholder="Escriu el teu missatge aquí..."></textarea>
           </div>
+          <div class="form-group-checkbox">
+            <input type="checkbox" id="politica" name="politica" required />
+            <label for="politica">
+              He llegit i accepto la <a href="/politica-privacitat" target="_blank" rel="noopener noreferrer">Política de Privacitat</a>
+            </label>
+          </div>
 
           <button type="submit" class="btn-enviar">Enviar missatge</button>
         </form>
@@ -122,6 +128,29 @@ import Footer from '../components/Footer.astro';
     display: flex;
     flex-direction: column;
     gap: 1.25rem;
+  }
+
+  .form-group-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 15px;
+  margin-bottom: 20px;
+}
+
+  .form-group-checkbox input[type="checkbox"] {
+    cursor: pointer;
+    width: 18px;
+    height: 18px;
+  }
+
+  .form-group-checkbox label {
+    font-size: 0.9rem;
+    cursor: pointer;
+  }
+
+  .form-group-checkbox a {
+    text-decoration: underline;
   }
 
   .campo {
